@@ -48,6 +48,12 @@ MONGO_URL = "mongodb+srv://angkmfirefoxygal:Rose77490801@30days.rtqtg.mongodb.ne
 
 ## 🔧 3. Docker Compose 실행
 
+```bash
+phonics/
+├── backend/
+└── docker-compose.yml(phonics 루트디렉토리에 추가, 아래에 yml 파일 코드 있음.)
+```
+
 ```yml
 version: "3.8"
 
