@@ -116,3 +116,36 @@ BE 팀장 **angkmfirefoxygal**
 4. `docker compose up --build` 실행으로 FastAPI + MongoDB 서버 구동 완료
 
 필요하면 FE + BE docker-compose 통합 가이드도 이어서 작성해줄 수 있으니 알려주세요!
+
+
+---- 
+## Project Structure
+```bash
+.
+├── __pycache__
+│   └── main.cpython-313.pyc
+├── app
+│   ├── api
+│   │   └── v1
+│   │       └── endpoints
+│   ├── core
+│   ├── crud
+│   ├── db
+│   ├── main.py
+│   ├── models
+│   ├── schemas
+│   └── tests
+├── docker-compose.yml
+├── Dockerfile
+├── README.md
+└── requirements.txt
+```
+
+- `main.py` : FastAPI() 생성, 필요한 router 관리
+- `core/` : 공통 설정, 보안관련로직, 인증 헬퍼 함수
+- `db/` : DB연결, 세션
+- `models/`: SQLAlchemy ORM 모델
+- `chemas/`: Pydantic 데이터 검증 / 직렬화 모델
+- `crud/` : DB Access 로직, 캡슐화
+- `api/`: FastAPI 라우팅 코드, 엔드포인트(Controller)집합
+- `tests/` : pytest 기반 테스트
