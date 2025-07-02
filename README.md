@@ -11,13 +11,13 @@
 ## 📁 Directory 구조
 
 ```bash
-root_directory/
-├── backend/
-│   ├── .env
-│   ├── Dockerfile
-│   ├── main.py
-│   └── requirements.txt
-└── docker-compose.yml
+backend/
+   ├── .env
+   ├── Dockerfile
+   ├── main.py
+   ├── docker-compose.yml
+   └── requirements.txt
+
 ```
 
 * `docker-compose.yml` 파일은 **phonics 루트 디렉토리**에 위치해야 합니다.
