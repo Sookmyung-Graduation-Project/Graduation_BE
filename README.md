@@ -48,6 +48,18 @@ MONGO_URL = "mongodb+srv://angkmfirefoxygal:Rose77490801@30days.rtqtg.mongodb.ne
 
 ## 🔧 3. Docker Compose 실행
 
+```yml
+version: "3.8"
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGO_URL=mongodb+srv://angkmfirefoxygal:Rose77490801@30days.rtqtg.mongodb.net/?retryWrites=true&w=majority&appName=30days
+```
+
 ```bash
 docker compose up --build
 ```
