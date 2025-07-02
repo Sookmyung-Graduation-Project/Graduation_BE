@@ -66,19 +66,23 @@ services:
       - MONGO_URL=mongodb+srv://angkmfirefoxygal:Rose77490801@30days.rtqtg.mongodb.net/?retryWrites=true&w=majority&appName=30days
 ```
 
-```bash
-docker compose up --build
-```
 
 첫 실행은 이미지 빌드로 시간이 소요될 수 있음 
 
 이후엔 docker compose up만 입력해도 실행 가능
 
 
-## ✅ 4. FastAPI 서버 접속 확인
-http://localhost:8000 접속
+```bash
+docker compose up --build
+```
 
-/test API 호출 시 MongoDB 연결 확인 가능
+
+
+
+## ✅ 4. FastAPI 서버 접속 확인
+http://localhost:8000 접속  
+
+/test API 호출 시 MongoDB 연결 확인 가능  
 
 ## 🛑 5. 서버 종료
 터미널에서 CTRL + C
