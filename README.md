@@ -11,7 +11,7 @@
 ## 📁 Directory 구조
 
 ```bash
-phonics/
+root_directory/
 ├── backend/
 │   ├── .env
 │   ├── Dockerfile
@@ -110,7 +110,7 @@ BE 팀장 **angkmfirefoxygal**
 
 ✅ **요약**
 
-1. phonics 루트 디렉토리에 `docker-compose.yml` 작성
+1. 루트 디렉토리에 `docker-compose.yml` 작성
 2. backend 레포 clone → backend 폴더에 배치
 3. .env 수정
 4. `docker compose up --build` 실행으로 FastAPI + MongoDB 서버 구동 완료
