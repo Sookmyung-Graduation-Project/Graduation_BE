@@ -72,10 +72,10 @@ docker compose down
 
 ### 📌 Trouble Shooting
 문제	해결 방법
-git 커밋 시 Author identity unknown	git config --global user.name "Your Name"
-git config --global user.email "your_email@example.com"
-docker compose 실행 권한 오류	VS Code 또는 PowerShell을 관리자 권한으로 실행
-connection refused	.env의 MONGO_URL, Atlas IP whitelist 확인
+git 커밋 시 Author identity unknown	git config --global user.name "Your Name" &nbsp;
+git config --global user.email "your_email@example.com" &nbsp;
+docker compose 실행 권한 오류	VS Code 또는 PowerShell을 관리자 권한으로 실행 &nbsp;
+connection refused	.env의 MONGO_URL, Atlas IP whitelist 확인 &nbsp;
 
 ### 🙋‍♀️ 문의
 BE 팀장 angkmfirefoxygal
