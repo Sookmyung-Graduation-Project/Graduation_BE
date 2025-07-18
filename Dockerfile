@@ -8,8 +8,11 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 4. 전체 소스 코드 복사
+# 4. .env 파일 복사 (누락되어 있던 부분)
+COPY .env .env
+
+# 5. 전체 소스 코드 복사
 COPY . /app
 
-# 5. uvicorn으로 FastAPI 서버 실행
+# 6. uvicorn으로 FastAPI 서버 실행
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
