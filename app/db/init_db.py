@@ -27,4 +27,4 @@ async def init_db():
             Attendance,
         ],
     )
-    print("✅ MongoDB + Beanie 초기화 완료")
+    print(" MongoDB + Beanie 초기화 완료")
