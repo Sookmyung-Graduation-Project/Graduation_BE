@@ -121,24 +121,25 @@ BE 팀장 **angkmfirefoxygal**
 ---- 
 ## Project Structure
 ```bash
-.
-├── __pycache__
-│   └── main.cpython-313.pyc
-├── app
-│   ├── api
-│   │   └── v1
-│   │       └── endpoints
-│   ├── core
-│   ├── crud
-│   ├── db
-│   ├── main.py
-│   ├── models
-│   ├── schemas
-│   └── tests
-├── docker-compose.yml
+
+Graduation_BE/
+├── app/
+│   ├── models/
+│   │   ├── user.py
+│   │   ├── book.py
+│   │   ├── voice.py
+│   │   ├── attendance.py
+│   │   ├── user_favorite_books.py
+│   │   └── user_recent_viewed_books.py
+│   ├── db.py
+│   └── main.py
+├── venv/
+├── .env
+├── requirements.txt
 ├── Dockerfile
-├── README.md
-└── requirements.txt
+└── docker-compose.yml
+
+
 ```
 
 - `main.py` : FastAPI() 생성, 필요한 router 관리
