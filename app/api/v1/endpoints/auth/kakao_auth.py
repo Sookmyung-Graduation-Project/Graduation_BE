@@ -35,13 +35,18 @@ async def kakao_login(body: KakaoLoginRequest):
     kakao_user = response.json()
     kakao_id = str(kakao_user["id"])
     nickname = kakao_user["properties"]["nickname"]
+    profile_image = kakao_user["properties"].get("profile_image", "")
 
     # 데이터베이스에서 사용자 확인
     user = await db["users"].find_one({"kakao_id": kakao_id})
 
     # 사용자가 없으면 새로 삽입
     if not user:
-        await db["users"].insert_one({"kakao_id": kakao_id, "nickname": nickname})
+        await db["users"].insert_one({
+            "kakao_id": kakao_id, 
+            "nickname": nickname,
+            "profile_image": profile_image  
+        })
 
     # JWT 토큰 생성
     jwt_token = create_access_token(
@@ -53,5 +58,6 @@ async def kakao_login(body: KakaoLoginRequest):
     return KakaoLoginResponse(
         access_token=jwt_token,
         user_id=kakao_id,
-        nickname=nickname
+        nickname=nickname,
+        profile_image=profile_image
     )
