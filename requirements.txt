@@ -36,5 +36,4 @@ python-jose[cryptography]
 # (Optional: form parsing)
 python-multipart
 
-# elevenlabs
-elevenlabs==1.*
+# 
