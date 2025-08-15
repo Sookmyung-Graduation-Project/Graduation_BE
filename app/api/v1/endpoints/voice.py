@@ -7,6 +7,8 @@ from fastapi.responses import StreamingResponse
 
 from app.core.elevenlabs_client import ElevenLabsClient
 from app.core.voice_service import VoiceService
+from app.core.security import get_current_user
+from app.models.user import User
 
 router = APIRouter( tags=["voice"])
 
@@ -19,6 +21,7 @@ async def create_ivc(
     description: Optional[str] = Form(None),
     files: List[UploadFile] = File(...),
     svc: VoiceService = Depends(get_service),
+    current_user: User = Depends(get_current_user),
 ):
     if not files:
         raise HTTPException(400, "files required")
@@ -43,6 +46,7 @@ async def tts(
     voice_id: str = Form(...),
     text: str = Form(...),
     svc: VoiceService = Depends(get_service),
+    current_user: User = Depends(get_current_user),
 ):
     if not text.strip():
         raise HTTPException(400, "text is empty")
