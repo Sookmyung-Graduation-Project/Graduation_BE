@@ -1,3 +1,4 @@
+from app.models.voice import Voice
 from fastapi import APIRouter, Depends
 from app.models.user import User
 from app.core.security import get_current_user
@@ -19,3 +20,14 @@ async def get_my_info(current_user: User = Depends(get_current_user)):
         "created_at": current_user.created_at,
         "updated_at": current_user.updated_at,
     }
+
+@router.get("/user/myvoice", summary="내 보이스 목록")
+async def list_my_voices(current_user: User = Depends(get_current_user)):
+    docs = await Voice.find(Voice.user_id == current_user.id).to_list()
+    return [{
+        "_id": str(d.id),
+        "voice_name": d.voice_name,
+        "voice_id": d.voice_id,
+        "description": d.description,
+        "created_at": d.created_at.isoformat() if d.created_at else None,
+    } for d in docs]

@@ -2,6 +2,8 @@
 from __future__ import annotations
 from typing import Optional, List
 import os, tempfile, shutil
+from datetime import datetime
+from app.models.voice import Voice
 from fastapi import APIRouter, UploadFile, File, Form, HTTPException, Depends
 from fastapi.responses import StreamingResponse
 
@@ -35,7 +37,32 @@ async def create_ivc(
                 shutil.copyfileobj(uf.file, out)
             tmp_paths.append(path)
 
-        return await svc.create_ivc(name=name, files=tmp_paths, description=description)
+        # Call ElevenLabs service
+        result = await svc.create_ivc(name=name, files=tmp_paths, description=description)
+        provider_voice_id = result.get("voice_id")
+        if not provider_voice_id:
+            raise HTTPException(502, "IVC provider did not return voice_id")
+        
+        # Save voice entry in MongoDB
+        voice_doc = Voice(
+            voice_id=provider_voice_id,
+            voice_name=name,
+            user_id=current_user.id,   # already a PydanticObjectId
+            created_at=datetime.now(),
+        )
+        # Add ElevenLabs voice_id as a dynamic field
+        voice_doc.voice_id = provider_voice_id
+        if description:
+            voice_doc.description = description
+
+        await voice_doc.insert()
+
+        return {
+            "ok": True,
+            "voice": voice_doc.dict(),
+            "provider_result": result
+        }
+
     finally:
         for p in tmp_paths:
             try: os.remove(p)
