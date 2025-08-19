@@ -6,6 +6,8 @@ from datetime import datetime
 from app.models.voice import Voice
 from fastapi import APIRouter, UploadFile, File, Form, HTTPException, Depends
 from fastapi.responses import StreamingResponse
+from fastapi import Body
+
 
 from app.core.elevenlabs_client import ElevenLabsClient
 from app.core.voice_service import VoiceService
@@ -85,3 +87,28 @@ async def tts(
         media_type="audio/mpeg",
         headers={"Content-Disposition": 'inline; filename="speech.mp3"'},
     )
+
+@router.post("/default", summary="기본 음성 설정 업데이트")
+async def update_default_voice(
+    voice_id: str = Body(..., embed=True),
+    current_user: User = Depends(get_current_user)
+):
+    # 1. 현재 사용자의 모든 음성 중 default_id가 True인 것들 False로 변경
+    await Voice.find(
+        Voice.user_id == current_user.id,
+        Voice.default_id == True
+    ).update({"$set": {"default_id": False}})
+
+    # 2. 해당 voice_id 문서의 default_id를 True로 업데이트
+    updated = await Voice.find_one(Voice.voice_id == voice_id, Voice.user_id == current_user.id)
+    if not updated:
+        return {"error": "voice_id not found for current user"}
+
+    updated.default_id = True
+    await updated.save()
+
+    # 3. User 컬렉션의 기본 음성 id 필드도 업데이트 (있다면)
+    current_user.default_voice_id = voice_id
+    await current_user.save()
+
+    return {"ok": True, "default_voice_id": voice_id}

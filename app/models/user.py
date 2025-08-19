@@ -28,7 +28,7 @@ class User(Document):
     # 앱 전용 필드
     user_role: UserRole = UserRole.parent
     child_age: Optional[int] = None
-    default_voice_id: Optional[PydanticObjectId] = None
+    default_voice_id: str = None
 
     # 타임스탬프 (UTC)
     created_at: datetime = Field(default_factory=datetime.utcnow)
