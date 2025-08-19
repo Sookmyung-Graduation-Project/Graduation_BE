@@ -112,3 +112,20 @@ async def update_default_voice(
     await current_user.save()
 
     return {"ok": True, "default_voice_id": voice_id}
+
+@router.post("/name", summary="음성 이름 변경")
+async def update_voice_name(
+    voice_id: str = Body(..., embed=True),
+    new_name: str = Body(..., embed=True),
+    current_user: User = Depends(get_current_user)
+):
+    # 1. 해당 voice_id 문서 찾기
+    voice = await Voice.find_one(Voice.voice_id == voice_id, Voice.user_id == current_user.id)
+    if not voice:
+        return {"error": "voice_id not found for current user"}
+
+    # 2. 음성 이름 변경
+    voice.voice_name = new_name
+    await voice.save()
+
+    return {"ok": True, "voice_id": voice_id, "new_name": new_name}
