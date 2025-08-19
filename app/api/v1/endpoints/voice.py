@@ -49,6 +49,7 @@ async def create_ivc(
             voice_name=name,
             user_id=current_user.id,   # already a PydanticObjectId
             created_at=datetime.now(),
+            default_id=False,
         )
         # Add ElevenLabs voice_id as a dynamic field
         voice_doc.voice_id = provider_voice_id

@@ -10,6 +10,7 @@ class Voice(Document):
     user_id: PydanticObjectId
     description: Optional[str] = None
     created_at: datetime = datetime.now()
+    default_id: bool = False
 
     class Settings:
         name = "voice"

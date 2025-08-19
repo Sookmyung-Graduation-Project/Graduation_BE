@@ -30,4 +30,5 @@ async def list_my_voices(current_user: User = Depends(get_current_user)):
         "voice_id": d.voice_id,
         "description": d.description,
         "created_at": d.created_at.isoformat() if d.created_at else None,
+        "default_id": d.default_id,
     } for d in docs]
