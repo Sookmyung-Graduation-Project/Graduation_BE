@@ -20,9 +20,6 @@ backend/
 
 ```
 
-* `docker-compose.yml` 파일은 **phonics 루트 디렉토리**에 위치해야 합니다.
-* `backend/` 폴더에는 BE 레포에서 clone 받은 파일들이 포함됩니다.
-
 ---
 
 ## ⚠️ 사전 설치
@@ -49,6 +46,8 @@ cd backend
 
 ```env
 MONGO_URL=mongodb+srv://angkmfirefoxygal:Rose77490801@30days.rtqtg.mongodb.net/?retryWrites=true&w=majority&appName=30days
+JWT_SECRET_KEY="18aa1bc885f3ae5e2522f68fb57811daa299260d07889e1c42ef3e0f50048db3"
+ELEVENLABS_API_KEY="sk_57c2e5bf0bdfcf05c6ce507c9df2c064c5e6839201855d80"
 ```
 
 ---
@@ -99,12 +98,6 @@ docker compose up --build
 ```bash
 docker compose down
 ```
-
----
-
-## 🙋‍♀️ 문의
-
-BE 팀장 **angkmfirefoxygal**
 
 ---
 
