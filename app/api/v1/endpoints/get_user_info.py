@@ -5,7 +5,7 @@ from app.core.security import get_current_user
 
 router = APIRouter()
 
-@router.get("/me", summary="User 정보 조회")
+@router.get("/me", summary="User 정보 조회, jwt 필요")
 async def get_my_info(current_user: User = Depends(get_current_user)):
     return {
         "id": str(current_user.id),
@@ -21,7 +21,7 @@ async def get_my_info(current_user: User = Depends(get_current_user)):
         "updated_at": current_user.updated_at,
     }
 
-@router.get("/user/myvoice", summary="내 보이스 목록")
+@router.get("/user/myvoice", summary="내 보이스 목록, jwt 필요")
 async def list_my_voices(current_user: User = Depends(get_current_user)):
     docs = await Voice.find(Voice.user_id == current_user.id).to_list()
     return [{

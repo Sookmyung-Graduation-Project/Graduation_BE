@@ -19,7 +19,7 @@ router = APIRouter( tags=["voice"])
 def get_service() -> VoiceService:
     return VoiceService(ElevenLabsClient())
 
-@router.post("/ivc", summary="Instant Voice Cloning 생성")
+@router.post("/ivc", summary="Instant Voice Cloning 생성, jwt 필요")
 async def create_ivc(
     name: str = Form(...),
     description: Optional[str] = Form(None),
@@ -71,7 +71,7 @@ async def create_ivc(
             try: os.remove(p)
             except: pass
 
-@router.post("/tts", summary="Text to Speech 변환")
+@router.post("/tts", summary="Text to Speech 변환, jwt 필요")
 async def tts(
     voice_id: str = Form(...),
     text: str = Form(...),
@@ -88,7 +88,27 @@ async def tts(
         headers={"Content-Disposition": 'inline; filename="speech.mp3"'},
     )
 
-@router.post("/default", summary="기본 음성 설정 업데이트")
+@router.post("/tts/test", summary="Text to Speech 변환, jwt 필요")
+async def tts(
+    voice_id: str = Form(...),
+    svc: VoiceService = Depends(get_service),
+    current_user: User = Depends(get_current_user),
+):
+    
+    fixed_text = "In a quiet village where the sky brushes the fields in hues of gold, young Mia discovered a map leading to forgotten treasures."
+
+    if not fixed_text.strip():
+        raise HTTPException(400, "text is empty")
+
+    audio = await svc.tts(voice_id=voice_id, text=fixed_text)
+    return StreamingResponse(
+        iter([audio]),
+        media_type="audio/mpeg",
+        headers={"Content-Disposition": 'inline; filename="speech.mp3"'},
+    )
+
+
+@router.post("/default", summary="기본 음성 설정 업데이트, jwt 필요")
 async def update_default_voice(
     voice_id: str = Body(..., embed=True),
     current_user: User = Depends(get_current_user)
@@ -113,7 +133,7 @@ async def update_default_voice(
 
     return {"ok": True, "default_voice_id": voice_id}
 
-@router.post("/name", summary="음성 이름 변경")
+@router.post("/name", summary="음성 이름 변경, jwt 필요")
 async def update_voice_name(
     voice_id: str = Body(..., embed=True),
     new_name: str = Body(..., embed=True),
@@ -130,7 +150,7 @@ async def update_voice_name(
 
     return {"ok": True, "voice_id": voice_id, "new_name": new_name}
 
-@router.post("/delete", summary="음성 삭제")
+@router.post("/delete", summary="음성 삭제, jwt 필요")
 async def delete_voice(
     voice_id: str = Body(..., embed=True),
     current_user: User = Depends(get_current_user)
@@ -140,7 +160,6 @@ async def delete_voice(
     if not voice:
         return {"error": "voice_id not found for current user"}
 
-
     await voice.delete()
-    
+
     return {"ok": True, "voice_id": voice_id}
