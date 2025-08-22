@@ -6,8 +6,11 @@ from typing import Optional
 
 class Voice(Document):
     voice_name: str = "기본 음성"
+    voice_id: str
     user_id: PydanticObjectId
+    description: Optional[str] = None
     created_at: datetime = datetime.now()
+    default_id: bool = False
 
     class Settings:
         name = "voice"
