@@ -6,6 +6,8 @@
 * **DB:** MongoDB Atlas
 * **Containerization:** Docker, Docker Compose
 
+* [erd 링크 🔗](https://dbdiagram.io/d/68649308f413ba3508d03220)
+![alt text](image.png)
 ---
 
 ## 📁 Directory 구조
