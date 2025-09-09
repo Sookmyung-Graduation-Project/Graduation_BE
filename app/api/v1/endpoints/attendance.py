@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from app.models.attendance import Attendance
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta, timezone, time
 from pydantic import BaseModel
 from beanie import PydanticObjectId
 from zoneinfo import ZoneInfo
