@@ -5,6 +5,7 @@ import httpx
 from app.core.jwt import create_access_token
 from app.schemas.auth import KakaoLoginRequest, KakaoLoginResponse
 from app.models.user import User, LoginType, UserRole
+from app.core.jwt import create_access_token, debug_print_exp
 
 router = APIRouter()
 KAKAO_USER_INFO_URL = "https://kapi.kakao.com/v2/user/me"
@@ -66,6 +67,8 @@ async def kakao_login(body: KakaoLoginRequest):
         data={"sub": str(user.id)},
         expires_delta=timedelta(hours=1)
     )
+    
+    debug_print_exp(jwt_token)
 
     return KakaoLoginResponse(
         access_token=jwt_token,
