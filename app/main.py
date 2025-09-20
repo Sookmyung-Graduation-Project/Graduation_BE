@@ -1,9 +1,15 @@
+from dotenv import load_dotenv
+
+# Load environment variables first
+load_dotenv()
+
 from fastapi import FastAPI
 from app.api.v1.endpoints.auth import kakao_auth
 from app.db.init_db import init_db
 from app.api.v1.endpoints import voice
 from app.api.v1.endpoints import attendance
 from app.api.v1.endpoints import get_user_info
+from app.routers import book_generation
 
 import uvicorn
 
@@ -17,7 +23,8 @@ async def start_db():
 app.include_router(kakao_auth.router, prefix="/login", tags=["auth"])
 app.include_router(voice.router, prefix="/voice", tags=["voice"])
 app.include_router(get_user_info.router, tags=["user"])
-app.include_router(attendance.router, prefix="/attendance", tags=["attendance"]) 
+app.include_router(attendance.router, prefix="/attendance", tags=["attendance"])
+app.include_router(book_generation.router, prefix="/book_generation", tags=["book-generation"]) 
 
 
 
