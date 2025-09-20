@@ -1,16 +1,17 @@
 import os, httpx, mimetypes
+from typing import Optional, List
 from dotenv import load_dotenv
 
 load_dotenv()
 _BASE = "https://api.elevenlabs.io/v1"
 
 class ElevenLabsClient:
-    def __init__(self, api_key: str | None = None):
+    def __init__(self, api_key: Optional[str] = None):
         self.api_key = api_key or os.getenv("ELEVENLABS_API_KEY", "")
         if not self.api_key:
             raise RuntimeError("ELEVENLABS_API_KEY not set")
 
-    async def create_ivc(self, name: str, files: list[str], description: str | None = None) -> dict:
+    async def create_ivc(self, name: str, files: List[str], description: Optional[str] = None) -> dict:
         headers = {"xi-api-key": self.api_key}
         data = {"name": name}
         if description:
