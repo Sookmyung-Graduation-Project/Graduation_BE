@@ -36,4 +36,7 @@ python-jose[cryptography]
 # (Optional: form parsing)
 python-multipart
 
+# OpenAI API
+openai>=1.0.0
+
 # 
